@@ -1,6 +1,10 @@
+import Navbar from "@repo/components/Navbar";
+import { theme } from "@repo/theme";
+import { Container, CssBaseline, ThemeProvider } from "@mui/material";
+import { Player } from "@repo/components/Player";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import { QueryProvider } from "@repo/providers/react-query";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +20,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className} style={{ backgroundColor: "black" }}>
+        <QueryProvider>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Navbar />
+            <Container style={{ margin: "90px" }}>{children}</Container>
+            <Player />
+          </ThemeProvider>
+        </QueryProvider>
+      </body>
     </html>
   );
 }

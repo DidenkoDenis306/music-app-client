@@ -8,6 +8,7 @@ interface Props {
 }
 
 export const TrackList: FC<Props> = ({ tracks }) => {
+  console.log(tracks);
   return (
     <Box display="flex" flexWrap="wrap">
       {tracks.map((track) => (

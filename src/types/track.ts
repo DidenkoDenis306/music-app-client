@@ -1,7 +1,7 @@
 import { IComment } from "./comment";
 
 export interface ITrack {
-  _id: string;
+  id: number;
   name: string;
   artist: string;
   text: string;

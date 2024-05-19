@@ -11,10 +11,22 @@ const steps = ["Info about track", "Upload picture", "Upload track"];
 export const StepWrapper: FC<Props> = ({ activeStep, children }) => {
   return (
     <Container>
+        <style>
+            {`.MuiStepLabel-label {
+                color: white;
+               }
+               .Mui-active {
+               color: white !important;
+            }
+            .Mui-completed {
+               color: white;
+            }
+            `}
+        </style>
       <Stepper activeStep={activeStep}>
         {steps.map((step, index) => (
           <Step key={step} completed={activeStep > index}>
-            <StepLabel>{step}</StepLabel>
+            <StepLabel sx={{color: "white"}} style={{color: "white"}}>{step}</StepLabel>
           </Step>
         ))}
       </Stepper>

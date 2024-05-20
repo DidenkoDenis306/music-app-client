@@ -65,8 +65,8 @@ export const TrackItem: FC<Props> = ({ track }) => {
         /> */}
 
         <img
-          src={addApiUrlToPath(track.picture)}
-          alt="pict"
+            src={`http://localhost:5555/${track.picture}`}
+            alt="pict"
           width={200}
           height={200}
           style={{ borderRadius: "20px" }}

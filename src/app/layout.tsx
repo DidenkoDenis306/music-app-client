@@ -20,14 +20,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className} style={{ backgroundColor: "black" }}>
+      <body className={inter.className} >
         <QueryProvider>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
+          {/*<ThemeProvider>*/}
+          {/*  <CssBaseline />*/}
             <Navbar />
             <Container style={{ margin: "90px" }}>{children}</Container>
             <Player />
-          </ThemeProvider>
+          {/*</ThemeProvider>*/}
         </QueryProvider>
       </body>
     </html>

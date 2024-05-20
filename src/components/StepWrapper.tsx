@@ -12,14 +12,12 @@ export const StepWrapper: FC<Props> = ({ activeStep, children }) => {
   return (
     <Container>
         <style>
-            {`.MuiStepLabel-label {
-                color: white;
-               }
+            {`
                .Mui-active {
-               color: white !important;
+               color: #d15534 !important; 
             }
             .Mui-completed {
-               color: white;
+               color: #d15534 !important;
             }
             `}
         </style>

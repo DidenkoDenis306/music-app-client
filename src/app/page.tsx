@@ -10,7 +10,7 @@ export default function Home() {
         alignItems="center"
         justifyContent="center"
         marginTop="150px"
-        color="white"
+        color="#d15534"
       >
         <h1>Welcome!</h1>
         <h3>Here is a best tracks</h3>

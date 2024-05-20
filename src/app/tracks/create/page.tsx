@@ -3,7 +3,7 @@
 import { FileUpload } from "@repo/components/FileUpload";
 import { StepWrapper } from "@repo/components/StepWrapper";
 
-import { Button, Grid, TextField } from "@mui/material";
+import {Box, Button, Grid, TextField} from "@mui/material";
 import { useState } from "react";
 import { useInput } from "@repo/hooks/useInput";
 import axios from "axios";
@@ -46,7 +46,7 @@ export default function Page() {
     <>
       <StepWrapper activeStep={activeStep}>
         {activeStep === 0 && (
-          <Grid container direction="column" sx={{ padding: 5 }}>
+          <Grid container direction="column" sx={{ padding: 5,    border: '2px solid #d15534' }}>
             <TextField {...name} label="Track name" sx={{ marginTop: 3 }} />
             <TextField {...artist} label="Artist name" sx={{ marginTop: 3 }} />
             <TextField
@@ -59,14 +59,21 @@ export default function Page() {
           </Grid>
         )}
         {activeStep === 1 && (
-          <Grid container direction="column" sx={{ padding: 20 }}>
-            <FileUpload setFile={setPicture} accept="image/*">
+          <Grid container direction="column" sx={{ padding: '20px',
+            border: '2px solid #d15534',
+            minHeight: '300px',
+            maxHeight: '350px',
+            objectFit: 'fit',
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'relative'}}>
+            <FileUpload setFile={setPicture} accept="image/*" >
               <Button>Upload picture</Button>
             </FileUpload>
           </Grid>
         )}
         {activeStep === 2 && (
-          <Grid container direction="column" sx={{ padding: 20 }}>
+          <Grid container direction="column" sx={{ padding: 20,    border: '2px solid #d15534' }}>
             <FileUpload setFile={setAudio} accept="audio/*">
               <Button>Upload audio</Button>
             </FileUpload>
@@ -74,12 +81,13 @@ export default function Page() {
         )}
       </StepWrapper>
 
-      <Grid>
-        <Button disabled={activeStep === 0} onClick={back}>
+      <Box sx={{position: 'relative',
+                top: '50px'}}>
+        <Button disabled={activeStep === 0} onClick={back} sx={{color: '#d15534'}}>
           Back
         </Button>
-        <Button onClick={next}>Continue</Button>
-      </Grid>
+        <Button onClick={next} sx={{color: '#d15534'}}>Continue</Button>
+      </Box>
     </>
   );
 }

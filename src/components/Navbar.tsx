@@ -29,6 +29,7 @@ import MusicNoteIcon from "@mui/icons-material/MusicNote";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { useRouter } from "next/navigation";
 import { Breadcrumbs, InputBase, alpha } from "@mui/material";
+import LoginIcon from "@repo/components/LoginIcon";
 
 const drawerWidth = 240;
 
@@ -169,7 +170,11 @@ export default function MiniDrawer() {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar position="fixed" open={open}>
-        <Toolbar>
+        <Toolbar sx={{display: "flex",
+                      justifyContent: "space-between",
+                      alignItems:"center",
+                      backgroundColor: '#d15534'}}>
+          <Box display={"flex"} >
           <IconButton
             color="secondary"
             aria-label="open drawer"
@@ -184,15 +189,14 @@ export default function MiniDrawer() {
             <MenuIcon />
           </IconButton>
 
-          <Breadcrumbs
-            sx={{ color: "gray" }}
-            separator={<NavigateNextIcon fontSize="small" />}
-            aria-label="breadcrumb"
-          >
-            [<Typography>Artist</Typography>,
-            <Typography color="white">The Weeknd</Typography>]
-          </Breadcrumbs>
-
+                <Breadcrumbs
+                  sx={{ color: "gray"}}
+                  separator={<NavigateNextIcon fontSize="small" />}
+                  aria-label="breadcrumb"
+                >
+                  [<Typography>Artist</Typography>,
+                  <Typography color="white">The Weeknd</Typography>]
+                </Breadcrumbs>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -202,15 +206,17 @@ export default function MiniDrawer() {
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
+          </Box>
+          <LoginIcon/>
         </Toolbar>
       </AppBar>
       <Drawer
         variant="permanent"
         open={open}
-        sx={{ backgroundColor: "primary.main" }}
+        
       >
-        <DrawerHeader sx={{ backgroundColor: "primary.main" }}>
-          <IconButton onClick={handleDrawerClose} sx={{ color: "white" }}>
+        <DrawerHeader >
+          <IconButton onClick={handleDrawerClose} sx={{ color: "#d15534" }}>
             {theme.direction === "rtl" ? (
               <ChevronRightIcon />
             ) : (
@@ -218,7 +224,7 @@ export default function MiniDrawer() {
             )}
           </IconButton>
         </DrawerHeader>
-        <List sx={{ backgroundColor: "primary.main" }}>
+        <List >
           {menuItems.map(({ text, icon, href }, index) => (
             <ListItem key={text} disablePadding sx={{ display: "block" }}>
               <ListItemButton
@@ -234,27 +240,20 @@ export default function MiniDrawer() {
                     minWidth: 0,
                     mr: open ? 3 : "auto",
                     justifyContent: "center",
-                    color: "white",
+                    color: "#d15534",
                   }}
                 >
                   {icon}
                 </ListItemIcon>
                 <ListItemText
                   primary={text}
-                  sx={{ opacity: open ? 1 : 0, color: "white" }}
+                  sx={{ opacity: open ? 1 : 0, color: "#d15534" }}
                 />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
       </Drawer>
-      <style>{`
-        .MuiDrawer-paper{
-          background-color: black;
-        }
-
-        
-      `}</style>
     </Box>
   );
 }

@@ -8,7 +8,7 @@ import {pages} from "@repo/constants/PAGES";
 const LoginIcon = () => {
     const router = useRouter();
     return (
-        <div onClick={() => router.push(pages.auth)}>
+        <div onClick={() => router.push(pages.signIn)}>
             <Box display={"flex"}
             alignItems={"center"}
             sx={{cursor: "pointer"}}>

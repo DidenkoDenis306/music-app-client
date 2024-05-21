@@ -86,6 +86,7 @@ export const TrackItem: FC<Props> = ({ track }) => {
             sx={{
               opacity: activeTrack?.id === track.id ? 0.5 : 0,
               transition: "opacity 0.3s",
+                borderRadius: "20px"
             }}
           >
             <IconButton
@@ -110,7 +111,7 @@ export const TrackItem: FC<Props> = ({ track }) => {
         <Box>
           <Box
             sx={{
-              color: "white",
+              color: "#2b2b2b",
               fontSize: 14,
               fontWeight: 600,
               whiteSpace: "nowrap",
@@ -120,7 +121,7 @@ export const TrackItem: FC<Props> = ({ track }) => {
           >
             {track.name}
           </Box>
-          <Box sx={{ fontSize: 14, color: "gray" }}>{track.artist}</Box>
+          <Box sx={{ fontSize: 14, color: "#858586" }}>{track.artist}</Box>
         </Box>
       </Box>
       ;

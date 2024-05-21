@@ -19,6 +19,8 @@ import {useForm} from "react-hook-form";
 import {ISignUp} from "@repo/types/signUp";
 import {string} from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
+import {signUpService} from "@repo/services/axios";
+import {pages} from "@repo/constants/PAGES";
 
 function Copyright(props: any) {
     return (
@@ -38,25 +40,23 @@ const defaultTheme = createTheme();
 
 
 
-export default function SignUp() {
+export default function SignUpForm() {
     const [isRegister, setIsRegister] = useState(true);
+    const [accessToken, setAccessToken] = useState()
     const authSchema = Yup.object().shape({
         email: Yup.string().email('Invalid email address').required(),
         password: Yup.string().required().min(8, 'Password must be at least 8 characters'),
-        passwordRepeat:  isRegister
-            ? Yup.string().notRequired()
-            : Yup.string().oneOf([Yup.ref('password')], 'Passwords must match').required('Required')
+        passwordRepeat: Yup.string().oneOf([Yup.ref('password')], 'Passwords must match').required('Required')
 
     });
     const {register,
         handleSubmit,
         formState: {errors}
             } = useForm<ISignUp>({resolver: yupResolver(authSchema)})
-    const onSubmit = (data : ISignUp) => {
-        console.log({
-            email: data.email,
-            password: data.password
-        });
+    const onSubmit = async (data : ISignUp) => {
+
+        const response = await signUpService.signUp(data);
+        console.log(response);
     };
 
     return (
@@ -80,7 +80,7 @@ export default function SignUp() {
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        {isRegister ? 'Sign in' : 'Sign up'}
+                        Sign up
                     </Typography>
                     <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
@@ -110,7 +110,7 @@ export default function SignUp() {
                                     helperText={errors.password?.message}
                                 />
                             </Grid>
-                            {isRegister? '' : <Grid item xs={12}>
+                            <Grid item xs={12}>
                                 <TextField
                                     required
                                     fullWidth
@@ -122,7 +122,7 @@ export default function SignUp() {
                                     error={!!errors.passwordRepeat}
                                     helperText={errors.passwordRepeat?.message}
                                 />
-                            </Grid>}
+                            </Grid>
 
                         </Grid>
                         <Button
@@ -132,12 +132,12 @@ export default function SignUp() {
                             sx={{ mt: 3, mb: 2 ,
                                     backgroundColor: '#d15534'}}
                         >
-                            {isRegister? 'Sign In' : 'Sign Up'}
+                            Sign Up
                         </Button>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
-                                <Link href="#" variant="body2" onClick={()=>setIsRegister(prevState => !prevState)}>
-                                    {isRegister? 'Don\'t have an account? Register' : 'Already have an account? Sign in'}
+                                <Link href={pages.signIn} variant="body2" onClick={()=>setIsRegister(prevState => !prevState)}>
+                                    Already have an account? Sign in
                                 </Link>
                             </Grid>
                         </Grid>

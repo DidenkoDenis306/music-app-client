@@ -5,15 +5,12 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useState} from "react";
 import {useForm} from "react-hook-form";
 import {ISignUp} from "@repo/types/signUp";
@@ -21,12 +18,21 @@ import {string} from "yup";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {signUpService} from "@repo/services/axios";
 import {pages} from "@repo/constants/PAGES";
+import {useAuth} from "@repo/hooks/useAuth";
+import {IResponseToken} from "@repo/types/responseToken";
+import {useSuccessfulAuth} from "@repo/hooks/useSuccessfulAuth";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
+import {useRouter} from "next/navigation";
 
 
 
 export default function SignInForm() {
     const [isRegister, setIsRegister] = useState(true);
     const [accessToken, setAccessToken] = useState()
+    const [errorState, setErrorState] = useState<string | null>(null);
+    const queryClient = useQueryClient();
+    const router = useRouter();
+
     const authSchema = Yup.object().shape({
         email: Yup.string().email('Invalid email address').required(),
         password: Yup.string().required().min(8, 'Password must be at least 8 characters'),
@@ -35,10 +41,25 @@ export default function SignInForm() {
         handleSubmit,
         formState: {errors}
     } = useForm<ISignUp>({resolver: yupResolver(authSchema)})
-    const onSubmit = async (data : ISignUp) => {
+    const {setCurrentUser} =  useAuth();
+    const mutation = useMutation(
+        {
+            mutationFn: signUpService.signIn,
+            onSuccess: (data) => {
+                setCurrentUser(data.token);
+                setErrorState(null);
+                router.push('/tracks/create');
+            },
+            onError: (error) => {
+                setErrorState('Invalid email or password');
+                console.log(error);
+            },
 
-        const response = await signUpService.signUp(data);
-        console.log(response);
+        }
+    );
+
+    const onSubmit = (data: ISignUp) => {
+        mutation.mutate(data);
     };
 
     return (
@@ -88,7 +109,7 @@ export default function SignInForm() {
     autoComplete="new-password"
     {...register('password')}
     error={!!errors.password}
-    helperText={errors.password?.message}
+    helperText={errorState? errorState : errors.password?.message}
     />
     </Grid>
 
@@ -105,7 +126,7 @@ export default function SignInForm() {
         <Grid container justifyContent="flex-end">
     <Grid item>
     <Link href={pages.signUp} variant="body2" onClick={()=>setIsRegister(prevState => !prevState)}>
-       Don't have an account? Register
+       Dont have an account? Register
         </Link>
         </Grid>
         </Grid>
